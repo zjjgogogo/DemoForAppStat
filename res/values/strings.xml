@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">DemoForAppStat</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Next Activity</string>
     <string name="action_settings">Settings</string>
 
 </resources>

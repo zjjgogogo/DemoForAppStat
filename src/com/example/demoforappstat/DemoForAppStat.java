@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 
 public class DemoForAppStat extends ActionBarActivity {
 	
+	static AppStatManager mAppStatManager;
+	
 	public static boolean isOnForeground(Context context){  
         ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);  
         List<RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();  
@@ -37,7 +39,7 @@ public class DemoForAppStat extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_demo_for_app_stat);
-
+		mAppStatManager = new AppStatManager(getApplicationContext());
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -51,6 +53,10 @@ public class DemoForAppStat extends ActionBarActivity {
 		Log.e(tag, "onStop");
 		Log.e(tag, "onStop isBack:" + !isOnForeground(this) );
 		super.onStop();
+		if(!isOnForeground(this))
+		{
+			mAppStatManager.stopStat();
+		}
 	}
 
 	@Override
@@ -78,7 +84,12 @@ public class DemoForAppStat extends ActionBarActivity {
 	protected void onStart() {
 		Log.e(tag, "onStart");
 		Log.e(tag, "onStart isBack:" + !isOnForeground(this) );
+		if(isOnForeground(this))
+		{
+			mAppStatManager.startStat();
+		}
 		super.onStart();
+		
 	}
 
 	@Override
